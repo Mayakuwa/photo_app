@@ -2,7 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Button, Image} from 'react-native';
 import Constants from 'expo-constants';
-import * as ImagePicker from 'expo-image-picker'
+import * as ImagePicker from 'expo-image-picker';
+import Color from "./src/color/color.js"
 
 export default function App() {
 
@@ -35,10 +36,26 @@ export default function App() {
     }
   };
 
+  const takeImage = async () => {
+    let result = await ImagePicker.launchCameraAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect:[4,3],
+      quality: 1
+    });
+
+    console.log(result);
+
+    if(!result.cancelled) {
+      setImage(result.uri);
+    }
+  }
+
 
   return (
     <View style={{flex : 1, alignItems: 'center', justifyContent: 'center'}}>
-      <Button title="Pick Image from Folder" onPress={pickImage} />
+      <Button title="Pick Image from Folder" color={Color.lightYellow} onPress={pickImage} />
+      <Button title="Take Photo" color={Color.lightYellow} onPress={takeImage} />
       {image && <Image source={{ uri: image }} style={{ width: 200, height: 200}}/>}
     </View>
   );
