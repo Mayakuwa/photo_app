@@ -1,20 +1,19 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, View, Button, Image} from 'react-native';
+import { StyleSheet, View, Button, Image } from 'react-native';
 import Constants from 'expo-constants';
 import * as ImagePicker from 'expo-image-picker';
 import Color from "./src/color/color.js"
 
 export default function App() {
-
   const [image, setImage] = useState(null);
 
-  //componentDidMountと似ている
+  // componentDidMountと似ている
+
   useEffect(() => {
     (async () => {
       if(Constants.platform.ios)  {
         const {status} = await ImagePicker.requestCameraPermissionsAsync();
-        if(status != 'granted') {
+        if (status != 'granted') {
           alert("フォルダにアクセスできません。");
         }
       }
@@ -25,8 +24,8 @@ export default function App() {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect:[4,3],
-      quality: 1
+      aspect:[4, 3],
+      quality: 1,
     });
 
     console.log(result);
@@ -40,13 +39,14 @@ export default function App() {
     let result = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      aspect:[4,3],
-      quality: 1
+      aspect:[4, 3],
+      quality: 1,
     });
 
+    // eslint-disable-next-line no-console
     console.log(result);
 
-    if(!result.cancelled) {
+    if (!result.cancelled) {
       setImage(result.uri);
     }
   }
